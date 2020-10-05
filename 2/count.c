@@ -3,7 +3,7 @@
 // #6 count.c
 int main(void) {
   unsigned long int charcount=0, wordcount=0, linecount=0;
-  
+
   char ch=0;
   // set 1 if ch is alphabet(a-z, A-Z), else 0
   int contiguous=1;
@@ -25,7 +25,7 @@ int main(void) {
       }
 
     }else {
-      contiguous=0;
+      contiguous=1;
     }
 
 
