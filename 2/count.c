@@ -3,6 +3,7 @@
 // #6 count.c
 int main(void) {
   unsigned long int charcount=0, wordcount=0, linecount=0;
+  
   char ch=0;
   // set 1 if ch is alphabet(a-z, A-Z), else 0
   int contiguous=1;
@@ -27,6 +28,7 @@ int main(void) {
       contiguous=0;
     }
 
+
     charcount++;
   }while(ch!=EOF);
 
@@ -34,4 +36,6 @@ int main(void) {
   printf("%lu %lu %lu\n", charcount, wordcount, linecount);
   return 0;
 }
+
 // getcharの戻り値がintである理由https://okwave.jp/qa/q5326377.html
+
