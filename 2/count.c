@@ -1,36 +1,32 @@
 #include <stdio.h>
 
-// #6 count.c
+
 int main(void) {
   unsigned long int charcount=0, wordcount=0, linecount=0;
 
   char ch=0;
-  // set 1 if ch is alphabet(a-z, A-Z), else 0
-  int contiguous=1;
+  int contiguous=0;
 
-  do {
-    ch = getchar();
-    // printf("ch(%d):%c\n", ch, ch);
+  while((ch = getchar())!=EOF) {
+
+    charcount++;
+
+    if(contiguous==0) {
+      if( (ch=='\'') || (ch>='A' && ch<='Z') || (ch>='a' && ch<='z') ) {
+        wordcount++;
+        contiguous=1;
+      }
+    }else {
+      if( !((ch=='\'') || (ch>='A' && ch<='Z') || (ch>='a' && ch<='z')) ) {
+        contiguous=0;
+      }
+    }
 
     if(ch=='\n') {
       linecount++;
-      contiguous=1;
-
-    }else if( (ch=='\'') || (ch>='A' && ch<='Z') || (ch>='a' && ch<='z') ) {
-
-      // increment when beginning of word appears: contiguous==1
-      if(contiguous==1)	{
-        wordcount++;
-        contiguous=0;
-      }
-
-    }else {
-      contiguous=1;
     }
 
-
-    charcount++;
-  }while(ch!=EOF);
+  }
 
   // reaching EOF
   printf("%lu %lu %lu\n", charcount, wordcount, linecount);
