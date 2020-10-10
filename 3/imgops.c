@@ -52,7 +52,7 @@ void set_pixel( uint8_t array[],
 // Set every pixel to 0 (black) 
 void zero( uint8_t array[], unsigned int cols, unsigned int rows )
 {
-  memset( array, 0, cols*rows*sizeof(uint8_t)));
+  memset( array, 0, cols*rows*sizeof(uint8_t));
   // your code here.
 }
 
@@ -104,7 +104,7 @@ void replace_color(uint8_t array[], unsigned int cols, unsigned int rows, uint8_
 {
   for(unsigned int i=0; i<cols*rows; i++) {
     if(array[i]==pre_color) {
-      array[i]==post_color;
+      array[i]=post_color;
     }
   }
   // your code here
@@ -233,7 +233,6 @@ uint8_t* half( const uint8_t array[],
 {
   unsigned int newCols = cols/2==0 ? cols/2 : (cols-1)/2;
   unsigned int newRows = rows/2==0 ? rows/2 : (rows-1)/2;
-  unsigned int size = newCols*newRows;
 
   uint8_t* newImg = (uint8_t *) malloc(newCols*newRows*sizeof(uint8_t));
 
@@ -241,9 +240,12 @@ uint8_t* half( const uint8_t array[],
 
   for(unsigned int i=0; i<newRows; i++) {
     for(unsigned int j=0; j<newCols; j++) {
-      unsigned int colSum = array[2j+2i*cols] + array[2j+1+2i*cols];
-      unsigned int rowSum = array[2j+(2i+1)*cols] + array[2j+1+(2i+1)*cols];
-      unsigned int total = colSum + rowSum;
+      // uint8_t colSum = get_pixel(array, cols, rows, 2j, 2i) + array[2j+1+2i*cols];
+      // uint8_t rowSum = array[2j+(2i+1)*cols] + array[2j+1+(2i+1)*cols];
+      uint8_t total = get_pixel(array, cols, rows, 2j, 2i)
+                    + get_pixel(array, cols, rows, 2j, 2i+1)
+                    + get_pixel(array, cols, rows, 2j+1, 2i)
+                    + get_pixel(array, cols, rows, 2j+1, 2i+1);
 
       set_pixel(newImg, newCols, newRows, j, i, (int)round(total/4.0));
     }
@@ -358,7 +360,7 @@ uint8_t* region_copy( const uint8_t array[],
     for(unsigned int i=left; i<right; ++i) {
       for(unsigned int j=top; j<bottom; ++j) {
         colorValue = get_pixel(array, cols, rows, i, j);
-        set_pixel(new, newCols, newRows, i-left, j-top, colorValue);
+        set_pixel(newImg, newCols, newRows, i-left, j-top, colorValue);
       }
     }
     return newImg;
